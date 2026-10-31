@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focusly Study Player</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #fff8f5;
+            font-family: Arial, sans-serif;
+            color: #332d35;
+        }
+
+        header {
+            padding: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #player {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: black;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        #message {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>🌸 Focusly Study Player</header>
+
+    <div id="player"></div>
+    <div id="message"></div>
+
+    <script>
+        const videoId = new URLSearchParams(
+            window.location.search
+        ).get("v");
+
+        const validId = /^[A-Za-z0-9_-]{11}$/.test(videoId || "");
+
+        if (validId) {
+            const iframe = document.createElement("iframe");
+
+            iframe.src =
+                "https://www.youtube.com/embed/" +
+                videoId +
+                "?playsinline=1&rel=0";
+
+            iframe.title = "Focusly Study Lecture";
+            iframe.referrerPolicy = "strict-origin-when-cross-origin";
+            iframe.allow =
+                "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
+            iframe.allowFullscreen = true;
+
+            document.getElementById("player").appendChild(iframe);
+        } else {
+            document.getElementById("message").textContent =
+                "Please provide a valid YouTube video ID.";
+        }
+    </script>
+</body>
+</html>
